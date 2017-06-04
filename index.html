@@ -6,39 +6,54 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   </head>
   <body>
+    <input type="text" id="input_text" value="">
+    <button type="button" id="search">search</button>
+
     <script type="text/javascript">
-    var remoteUrlWithOrigin = "https://en.wikipedia.org/w/api.php";
-    var queryData = {
-      action:"opensearch",
-      format:"json",
-      origin:"*",
-      search:"Bridge",
-      limit:50
-    }
-    $.ajax( {
-        url: remoteUrlWithOrigin,
-        data: queryData,
-        dataType: 'json',
-        type: 'GET',
-        headers: { 'Api-User-Agent': 'Example/1.0' },
-        success: function(data) {
-          console.log(data);
+    $(function(){
+      $("#search").click(function(){
+        var searchTerm = $("#input_text").val();
+        searchAndRender(searchTerm);
+      });
+    });
 
-          var titles = data[1];
-          var summary = data[2];
-          var links = data[3];
-          var template = $("#list_item").html();
+    function searchAndRender(searchTerm){
+      var remoteUrlWithOrigin = "https://en.wikipedia.org/w/api.php";
+      var queryData = {
+        action:"opensearch",
+        format:"json",
+        origin:"*",
+        search:searchTerm,
+        limit:50
+      }
+      $.ajax( {
+          url: remoteUrlWithOrigin,
+          data: queryData,
+          dataType: 'json',
+          type: 'GET',
+          headers: { 'Api-User-Agent': 'Example/1.0' },
+          success: function(data) {
+            //  console.log(data);
+            // clear last results
+            $("#results").empty();
 
-          for (var i = 0; i < titles.length; i++) {
-            var listItem = $(template);
+            var titles = data[1];
+            var summary = data[2];
+            var links = data[3];
+            var template = $("#list_item").html();
 
-            $(listItem).find(".title").text(titles[i]);
-            // render other properties
+            for (var i = 0; i < titles.length; i++) {
+              var listItem = $(template);
 
-            $("#results").append($(listItem));
+              $(listItem).find(".title").text(titles[i]);
+              // render other properties
+
+              $("#results").append($(listItem));
+            }
           }
-        }
-    } );
+      });
+    };
+
     </script>
 
     <h3>Search Results</h3>
