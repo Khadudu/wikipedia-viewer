@@ -7,7 +7,23 @@
   </head>
   <body>
     <script type="text/javascript">
-
+    var remoteUrlWithOrigin = "https://en.wikipedia.org/w/api.php";
+    var queryData = {
+      action:"opensearch",
+      format:"json",
+      origin:"*",
+      search:"Bridge"
+    }
+    $.ajax( {
+        url: remoteUrlWithOrigin,
+        data: queryData,
+        dataType: 'json',
+        type: 'GET',
+        headers: { 'Api-User-Agent': 'Example/1.0' },
+        success: function(data) {
+          console.log(data);
+        }
+    } );
     </script>
   </body>
 </html>
