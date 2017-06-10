@@ -1,0 +1,22 @@
+html, body {
+background-color: #282C34;
+color: white;
+margin: 0;
+padding: 0;
+text-align: center;
+padding-top: 150px;
+
+}
+
+#input_text{
+  width: 400px;
+  height: 30px;
+}
+
+#search{
+  font-size: 20px;
+  height: 34px;
+  color: blue;
+  padding-bottom: 6px;
+  font-weight: bold;
+}
